@@ -372,6 +372,8 @@
     <h2 class="section-title">Ready to Grow?</h2>
     <p class="section-sub">Book a free strategy call or drop us a message. We'll get back to you within 24 hours.</p>
     <form class="contact-form" action="https://formspree.io/f/meewonbb" method="POST" onsubmit="handleSubmit(event)">
+      <!-- Honeypot: hidden field bots fill in, humans don't -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
       <div class="form-row">
         <input type="text" name="name" placeholder="Your Name" required />
         <input type="email" name="email" placeholder="Email Address" required />
@@ -539,13 +541,51 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  // ── Rate limiting: max 3 submissions per 24h ──
+  const RATE_KEY = 'ewaveai_submissions';
+  const RATE_LIMIT = 3;
+  const RATE_WINDOW = 24 * 60 * 60 * 1000; // 24 hours in ms
+
+  function getRateData() {
+    try { return JSON.parse(localStorage.getItem(RATE_KEY) || '[]'); } catch { return []; }
+  }
+
+  function isRateLimited() {
+    const now = Date.now();
+    const timestamps = getRateData().filter(t => now - t < RATE_WINDOW);
+    localStorage.setItem(RATE_KEY, JSON.stringify(timestamps));
+    return timestamps.length >= RATE_LIMIT;
+  }
+
+  function recordSubmission() {
+    const timestamps = getRateData().filter(t => Date.now() - t < RATE_WINDOW);
+    timestamps.push(Date.now());
+    localStorage.setItem(RATE_KEY, JSON.stringify(timestamps));
+  }
+
   // ── Form submit via Formspree ──
   async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button');
+
+    // Honeypot check
+    if (form._gotcha && form._gotcha.value) return;
+
+    // Rate limit check
+    if (isRateLimited()) {
+      btn.textContent = 'Too many submissions — try again later';
+      btn.style.background = '#c0392b';
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+      }, 4000);
+      return;
+    }
+
     btn.textContent = 'Sending…';
     btn.disabled = true;
+
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -553,6 +593,7 @@
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
+        recordSubmission();
         btn.textContent = 'Message Sent!';
         btn.style.background = '#3ac58f';
         form.reset();
