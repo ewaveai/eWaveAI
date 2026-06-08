@@ -597,6 +597,9 @@
         btn.textContent = 'Message Sent!';
         btn.style.background = '#3ac58f';
         form.reset();
+      } else if (res.status === 429) {
+        btn.textContent = 'Too many submissions — try again later';
+        btn.style.background = '#7f689f';
       } else {
         btn.textContent = 'Error — try again';
         btn.style.background = '#c0392b';
