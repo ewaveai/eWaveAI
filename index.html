@@ -10,7 +10,7 @@
     :root {
       --purple: #7f689f;
       --white: #ffffff;
-      --green: #3ac58f;
+      --green: #5AC7BA;
       --radius: 12px;
       --shadow: 0 8px 32px rgba(0,0,0,0.25);
       --shadow-sm: 0 2px 12px rgba(0,0,0,0.18);
@@ -324,8 +324,8 @@
     <line x1="20" y1="5" x2="48" y2="5" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
     <circle cx="15" cy="5" r="4.5" fill="#7f689f" stroke="#ffffff" stroke-width="2.5"/>
     <!-- Middle line: green -->
-    <line x1="11" y1="18" x2="48" y2="18" stroke="#3ac58f" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="6" cy="18" r="4.5" fill="#7f689f" stroke="#3ac58f" stroke-width="2.5"/>
+    <line x1="11" y1="18" x2="48" y2="18" stroke="#5AC7BA" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="6" cy="18" r="4.5" fill="#7f689f" stroke="#5AC7BA" stroke-width="2.5"/>
     <!-- Bottom line: white -->
     <line x1="28" y1="31" x2="48" y2="31" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
     <circle cx="23" cy="31" r="4.5" fill="#7f689f" stroke="#ffffff" stroke-width="2.5"/>
@@ -661,7 +661,7 @@
       if (res.ok) {
         recordSubmission();
         btn.textContent = 'Message Sent!';
-        btn.style.background = '#3ac58f';
+        btn.style.background = '#5AC7BA';
         form.reset();
       } else if (res.status === 429) {
         btn.textContent = 'Too many submissions — try again later';
