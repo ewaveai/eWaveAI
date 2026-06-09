@@ -92,8 +92,8 @@
       animation: pulse-border 2.5s ease-in-out infinite;
     }
     @keyframes pulse-border {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(58,197,143,0.4); }
-      50%       { box-shadow: 0 0 0 6px rgba(58,197,143,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(90,199,186,0.4); }
+      50%       { box-shadow: 0 0 0 6px rgba(90,199,186,0); }
     }
     h1 {
       font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -179,7 +179,6 @@
       margin-bottom: 1.2rem;
       box-shadow: var(--shadow-sm);
     }
-    /* SVG icon inside service-icon */
     .service-icon svg { width: 24px; height: 24px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .service-card h3 { font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
     .service-card p { color: var(--white); font-size: 0.93rem; line-height: 1.6; }
@@ -246,7 +245,7 @@
     .contact-form input:focus,
     .contact-form textarea:focus {
       border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(58,197,143,0.2);
+      box-shadow: 0 0 0 3px rgba(90,199,186,0.2);
     }
     .contact-form textarea { resize: vertical; min-height: 130px; }
     .contact-form button {
@@ -307,6 +306,28 @@
     #dropdown a:last-child { border-bottom: none; }
     #dropdown a:hover { background: var(--green); color: var(--white); }
 
+    /* ── LANGUAGE TOGGLE ── */
+    #lang-toggle {
+      position: fixed; top: 1.2rem; right: 1.5rem; z-index: 300;
+      display: flex; gap: 0.35rem;
+    }
+    #lang-toggle button {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.25rem 0.65rem; border-radius: 6px; cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      font-family: inherit;
+    }
+    #lang-toggle button.active {
+      background: var(--green); border-color: var(--green); color: var(--white);
+    }
+    #lang-toggle button:hover:not(.active) {
+      border-color: var(--white); color: var(--white);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
@@ -316,6 +337,11 @@
 </head>
 <body>
 
+<!-- LANGUAGE TOGGLE -->
+<div id="lang-toggle">
+  <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+  <button id="btn-de" onclick="setLang('de')">DE</button>
+</div>
 
 <!-- DROPDOWN MENU -->
 <div id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
@@ -332,21 +358,21 @@
   </svg>
 </div>
 <div id="dropdown">
-  <a href="#">WEBSITES</a>
-  <a href="#">MARKETING</a>
-  <a href="#">AI AUTOMATION</a>
+  <a href="#services" data-i18n="nav-websites">WEBSITES</a>
+  <a href="#services" data-i18n="nav-marketing">MARKETING</a>
+  <a href="#services" data-i18n="nav-ai">AI AUTOMATION</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-content">
   <img src="eWaveAI_logo_transparent.png" alt="eWaveAI" style="height:180px;width:auto;display:block;margin:0 auto 2rem;">
-    <div class="hero-badge">Websites · Marketing · AI Automation</div>
-    <h1>Grow Your Business.<br><span class="highlight">Work Less. Earn More.</span></h1>
-    <p class="hero-sub">eWaveAI builds high-converting websites, deploys AI automations, and sets up marketing systems that bring in customers around the clock — without you lifting a finger.</p>
+    <div class="hero-badge" data-i18n="hero-badge">Websites · Marketing · AI Automation</div>
+    <h1><span data-i18n="h1-line1">Grow Your Business.</span><br><span class="highlight" data-i18n="h1-line2">Work Less. Earn More.</span></h1>
+    <p class="hero-sub" data-i18n="hero-sub">eWaveAI builds high-converting websites, deploys AI automations, and sets up marketing systems that bring in customers around the clock — without you lifting a finger.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#contact">Book a Free Strategy Call</a>
-      <a class="btn-ghost" href="#services">See What We Do</a>
+      <a class="btn-primary" href="#contact" data-i18n="btn-primary">Book a Free Strategy Call</a>
+      <a class="btn-ghost" href="#services" data-i18n="btn-ghost">See What We Do</a>
     </div>
   </div>
 </section>
@@ -354,38 +380,38 @@
 <!-- SERVICES -->
 <section id="services">
   <div class="section-header reveal">
-    <div class="section-label">What We Do</div>
-    <h2 class="section-title">Everything You Need to Dominate Online</h2>
-    <p class="section-sub">From your first website to a fully automated customer acquisition machine.</p>
+    <div class="section-label" data-i18n="services-label">What We Do</div>
+    <h2 class="section-title" data-i18n="services-title">Everything You Need to Dominate Online</h2>
+    <p class="section-sub" data-i18n="services-sub">From your first website to a fully automated customer acquisition machine.</p>
   </div>
   <div class="services-grid">
     <div class="service-card reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </div>
-      <h3>High-Converting Websites</h3>
-      <p>Custom-built sites designed to turn visitors into paying customers — fast, beautiful, and built to rank.</p>
+      <h3 data-i18n="s1-title">High-Converting Websites</h3>
+      <p data-i18n="s1-desc">Custom-built sites designed to turn visitors into paying customers — fast, beautiful, and built to rank.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       </div>
-      <h3>AI Automations</h3>
-      <p>We automate repetitive tasks — follow-ups, bookings, lead routing — so you can focus on what matters most.</p>
+      <h3 data-i18n="s2-title">AI Automations</h3>
+      <p data-i18n="s2-desc">We automate repetitive tasks — follow-ups, bookings, lead routing — so you can focus on what matters most.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       </div>
-      <h3>Digital Marketing</h3>
-      <p>Ads, SEO, email funnels, and social strategies that put your business in front of the right people.</p>
+      <h3 data-i18n="s3-title">Digital Marketing</h3>
+      <p data-i18n="s3-desc">Ads, SEO, email funnels, and social strategies that put your business in front of the right people.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
       </div>
-      <h3>Growth Systems</h3>
-      <p>End-to-end customer journeys that nurture leads and maximize lifetime value — all on autopilot.</p>
+      <h3 data-i18n="s4-title">Growth Systems</h3>
+      <p data-i18n="s4-desc">End-to-end customer journeys that nurture leads and maximize lifetime value — all on autopilot.</p>
     </div>
   </div>
 </section>
@@ -393,30 +419,30 @@
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="section-header reveal">
-    <div class="section-label">The Process</div>
-    <h2 class="section-title">From Zero to Automated in 4 Steps</h2>
-    <p class="section-sub">A proven process that gets you results without the headaches.</p>
+    <div class="section-label" data-i18n="how-label">The Process</div>
+    <h2 class="section-title" data-i18n="how-title">From Zero to Automated in 4 Steps</h2>
+    <p class="section-sub" data-i18n="how-sub">A proven process that gets you results without the headaches.</p>
   </div>
   <div class="steps">
     <div class="step reveal">
       <div class="step-num">1</div>
-      <h3>Strategy Call</h3>
-      <p>We learn your business, goals, and gaps — then map out the fastest path to growth.</p>
+      <h3 data-i18n="step1-title">Strategy Call</h3>
+      <p data-i18n="step1-desc">We learn your business, goals, and gaps — then map out the fastest path to growth.</p>
     </div>
     <div class="step reveal">
       <div class="step-num">2</div>
-      <h3>Build &amp; Launch</h3>
-      <p>Your website and marketing stack go live in weeks, not months.</p>
+      <h3 data-i18n="step2-title">Build &amp; Launch</h3>
+      <p data-i18n="step2-desc">Your website and marketing stack go live in weeks, not months.</p>
     </div>
     <div class="step reveal">
       <div class="step-num">3</div>
-      <h3>Automate</h3>
-      <p>AI workflows handle leads, follow-ups, and operations around the clock.</p>
+      <h3 data-i18n="step3-title">Automate</h3>
+      <p data-i18n="step3-desc">AI workflows handle leads, follow-ups, and operations around the clock.</p>
     </div>
     <div class="step reveal">
       <div class="step-num">4</div>
-      <h3>Scale</h3>
-      <p>We optimize and expand — more traffic, higher conversion, greater profit.</p>
+      <h3 data-i18n="step4-title">Scale</h3>
+      <p data-i18n="step4-desc">We optimize and expand — more traffic, higher conversion, greater profit.</p>
     </div>
   </div>
 </section>
@@ -424,26 +450,26 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner reveal">
-    <div class="section-label">Get In Touch</div>
-    <h2 class="section-title">Ready to Grow?</h2>
-    <p class="section-sub">Book a free strategy call or drop us a message. We'll get back to you within 24 hours.</p>
+    <div class="section-label" data-i18n="contact-label">Get In Touch</div>
+    <h2 class="section-title" data-i18n="contact-title">Ready to Grow?</h2>
+    <p class="section-sub" data-i18n="contact-sub">Book a free strategy call or drop us a message. We'll get back to you within 24 hours.</p>
     <form class="contact-form" action="https://ewaveai-form.wandering-rain-c7ce.workers.dev" method="POST" onsubmit="handleSubmit(event)">
       <!-- Honeypot: hidden field bots fill in, humans don't -->
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
       <div class="form-row">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="text" name="name" data-i18n-ph="ph-name" placeholder="Your Name" required />
+        <input type="email" name="email" data-i18n-ph="ph-email" placeholder="Email Address" required />
       </div>
-      <input type="text" name="business" placeholder="Your Business / Website URL" />
-      <textarea name="message" placeholder="Tell us about your goals…"></textarea>
-      <button type="submit">Send Message →</button>
+      <input type="text" name="business" data-i18n-ph="ph-business" placeholder="Your Business / Website URL" />
+      <textarea name="message" data-i18n-ph="ph-message" placeholder="Tell us about your goals…"></textarea>
+      <button type="submit" data-i18n="btn-submit">Send Message →</button>
     </form>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 <strong>eWaveAI</strong>. All rights reserved. · <a href="mailto:info@ewaveai.de">info@ewaveai.de</a></p>
+  <p>© 2026 <strong>eWaveAI</strong>. <span data-i18n="footer-rights">All rights reserved.</span> · <a href="mailto:info@ewaveai.de">info@ewaveai.de</a></p>
 </footer>
 
 <!-- CHATBOT -->
@@ -574,18 +600,138 @@
     <div class="chat-avatar">W</div>
     <div class="chat-header-info">
       <div class="chat-header-name">Wavey — eWaveAI Bot</div>
-      <div class="chat-header-status">Online & caffeinated</div>
+      <div class="chat-header-status" data-i18n="chat-status">Online & caffeinated</div>
     </div>
   </div>
   <div class="chat-messages" id="chat-messages"></div>
   <div class="chat-suggestions" id="chat-chips"></div>
   <div class="chat-input-row">
-    <input id="chat-input" type="text" placeholder="Ask me anything…" onkeydown="if(event.key==='Enter') sendMsg()" />
-    <button onclick="sendMsg()">Send</button>
+    <input id="chat-input" type="text" data-i18n-ph="chat-ph" placeholder="Ask me anything…" onkeydown="if(event.key==='Enter') sendMsg()" />
+    <button onclick="sendMsg()" data-i18n="chat-send">Send</button>
   </div>
 </div>
 
 <script>
+  // ── Translations ──
+  const T = {
+    en: {
+      'nav-websites': 'WEBSITES',
+      'nav-marketing': 'MARKETING',
+      'nav-ai': 'AI AUTOMATION',
+      'hero-badge': 'Websites · Marketing · AI Automation',
+      'h1-line1': 'Grow Your Business.',
+      'h1-line2': 'Work Less. Earn More.',
+      'hero-sub': 'eWaveAI builds high-converting websites, deploys AI automations, and sets up marketing systems that bring in customers around the clock — without you lifting a finger.',
+      'btn-primary': 'Book a Free Strategy Call',
+      'btn-ghost': 'See What We Do',
+      'services-label': 'What We Do',
+      'services-title': 'Everything You Need to Dominate Online',
+      'services-sub': 'From your first website to a fully automated customer acquisition machine.',
+      's1-title': 'High-Converting Websites',
+      's1-desc': 'Custom-built sites designed to turn visitors into paying customers — fast, beautiful, and built to rank.',
+      's2-title': 'AI Automations',
+      's2-desc': 'We automate repetitive tasks — follow-ups, bookings, lead routing — so you can focus on what matters most.',
+      's3-title': 'Digital Marketing',
+      's3-desc': 'Ads, SEO, email funnels, and social strategies that put your business in front of the right people.',
+      's4-title': 'Growth Systems',
+      's4-desc': 'End-to-end customer journeys that nurture leads and maximize lifetime value — all on autopilot.',
+      'how-label': 'The Process',
+      'how-title': 'From Zero to Automated in 4 Steps',
+      'how-sub': 'A proven process that gets you results without the headaches.',
+      'step1-title': 'Strategy Call',
+      'step1-desc': 'We learn your business, goals, and gaps — then map out the fastest path to growth.',
+      'step2-title': 'Build & Launch',
+      'step2-desc': 'Your website and marketing stack go live in weeks, not months.',
+      'step3-title': 'Automate',
+      'step3-desc': 'AI workflows handle leads, follow-ups, and operations around the clock.',
+      'step4-title': 'Scale',
+      'step4-desc': 'We optimize and expand — more traffic, higher conversion, greater profit.',
+      'contact-label': 'Get In Touch',
+      'contact-title': 'Ready to Grow?',
+      'contact-sub': "Book a free strategy call or drop us a message. We'll get back to you within 24 hours.",
+      'ph-name': 'Your Name',
+      'ph-email': 'Email Address',
+      'ph-business': 'Your Business / Website URL',
+      'ph-message': 'Tell us about your goals…',
+      'btn-submit': 'Send Message →',
+      'footer-rights': 'All rights reserved.',
+      'chat-status': 'Online & caffeinated',
+      'chat-ph': 'Ask me anything…',
+      'chat-send': 'Send',
+      'msg-rate': 'Too many submissions — try again later',
+      'msg-sending': 'Sending…',
+      'msg-sent': 'Message Sent!',
+      'msg-error': 'Error — try again',
+    },
+    de: {
+      'nav-websites': 'WEBSITES',
+      'nav-marketing': 'MARKETING',
+      'nav-ai': 'KI-AUTOMATISIERUNG',
+      'hero-badge': 'Websites · Marketing · KI-Automatisierung',
+      'h1-line1': 'Wachse schneller.',
+      'h1-line2': 'Weniger arbeiten. Mehr verdienen.',
+      'hero-sub': 'eWaveAI entwickelt hochkonvertierende Websites, setzt KI-Automatisierungen ein und baut Marketingsysteme, die rund um die Uhr Kunden bringen – ohne dass du einen Finger rühren musst.',
+      'btn-primary': 'Kostenloses Strategiegespräch',
+      'btn-ghost': 'Unsere Leistungen',
+      'services-label': 'Was wir tun',
+      'services-title': 'Alles, was du brauchst, um online zu dominieren',
+      'services-sub': 'Von deiner ersten Website bis zur vollautomatischen Kundengewinnungsmaschine.',
+      's1-title': 'Hochkonvertierende Websites',
+      's1-desc': 'Maßgeschneiderte Seiten, die Besucher in zahlende Kunden verwandeln – schnell, schön und für Google optimiert.',
+      's2-title': 'KI-Automatisierungen',
+      's2-desc': 'Wir automatisieren wiederkehrende Aufgaben – Follow-ups, Buchungen, Lead-Routing – damit du dich auf das Wesentliche konzentrieren kannst.',
+      's3-title': 'Digitales Marketing',
+      's3-desc': 'Anzeigen, SEO, E-Mail-Funnels und Social-Strategien, die dein Unternehmen genau den richtigen Menschen zeigen.',
+      's4-title': 'Wachstumssysteme',
+      's4-desc': 'End-to-End-Kundenreisen, die Leads pflegen und den Lifetime Value maximieren – vollautomatisch.',
+      'how-label': 'Der Prozess',
+      'how-title': 'Von null auf automatisiert in 4 Schritten',
+      'how-sub': 'Ein bewährter Prozess, der Ergebnisse liefert – ohne Kopfschmerzen.',
+      'step1-title': 'Strategiegespräch',
+      'step1-desc': 'Wir lernen dein Unternehmen, deine Ziele und Lücken kennen – und zeigen dir den schnellsten Weg zum Wachstum.',
+      'step2-title': 'Aufbau & Launch',
+      'step2-desc': 'Deine Website und dein Marketing-Stack gehen in Wochen live, nicht in Monaten.',
+      'step3-title': 'Automatisieren',
+      'step3-desc': 'KI-Workflows übernehmen Leads, Follow-ups und Abläufe rund um die Uhr.',
+      'step4-title': 'Skalieren',
+      'step4-desc': 'Wir optimieren und erweitern – mehr Traffic, höhere Conversion, mehr Gewinn.',
+      'contact-label': 'Kontakt',
+      'contact-title': 'Bereit zu wachsen?',
+      'contact-sub': 'Buche ein kostenloses Strategiegespräch oder schreib uns. Wir melden uns innerhalb von 24 Stunden.',
+      'ph-name': 'Dein Name',
+      'ph-email': 'E-Mail-Adresse',
+      'ph-business': 'Dein Unternehmen / Website-URL',
+      'ph-message': 'Erzähl uns von deinen Zielen…',
+      'btn-submit': 'Nachricht senden →',
+      'footer-rights': 'Alle Rechte vorbehalten.',
+      'chat-status': 'Online & kaffeinegestärkt',
+      'chat-ph': 'Frag mich etwas…',
+      'chat-send': 'Senden',
+      'msg-rate': 'Zu viele Anfragen – bitte später erneut versuchen',
+      'msg-sending': 'Wird gesendet…',
+      'msg-sent': 'Nachricht gesendet!',
+      'msg-error': 'Fehler – bitte erneut versuchen',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (T[lang][key] !== undefined) el.placeholder = T[lang][key];
+    });
+  }
+
   // ── Dropdown menu ──
   function toggleMenu() {
     document.getElementById('dropdown').classList.toggle('open');
@@ -610,7 +756,7 @@
   // ── Rate limiting: max 3 submissions per 24h ──
   const RATE_KEY = 'ewaveai_submissions';
   const RATE_LIMIT = 3;
-  const RATE_WINDOW = 24 * 60 * 60 * 1000; // 24 hours in ms
+  const RATE_WINDOW = 24 * 60 * 60 * 1000;
 
   function getRateData() {
     try { return JSON.parse(localStorage.getItem(RATE_KEY) || '[]'); } catch { return []; }
@@ -629,27 +775,23 @@
     localStorage.setItem(RATE_KEY, JSON.stringify(timestamps));
   }
 
-  // ── Form submit via Formspree ──
+  // ── Form submit ──
   async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button');
+    const L = T[currentLang];
 
-    // Honeypot check
     if (form._gotcha && form._gotcha.value) return;
 
-    // Rate limit check
     if (isRateLimited()) {
-      btn.textContent = 'Too many submissions — try again later';
+      btn.textContent = L['msg-rate'];
       btn.style.background = '#c0392b';
-      setTimeout(() => {
-        btn.textContent = 'Send Message →';
-        btn.style.background = '';
-      }, 4000);
+      setTimeout(() => { btn.textContent = L['btn-submit']; btn.style.background = ''; }, 4000);
       return;
     }
 
-    btn.textContent = 'Sending…';
+    btn.textContent = L['msg-sending'];
     btn.disabled = true;
 
     try {
@@ -660,129 +802,72 @@
       });
       if (res.ok) {
         recordSubmission();
-        btn.textContent = 'Message Sent!';
+        btn.textContent = L['msg-sent'];
         btn.style.background = '#5AC7BA';
         form.reset();
       } else if (res.status === 429) {
-        btn.textContent = 'Too many submissions — try again later';
+        btn.textContent = L['msg-rate'];
         btn.style.background = '#7f689f';
       } else {
-        btn.textContent = 'Error — try again';
+        btn.textContent = L['msg-error'];
         btn.style.background = '#c0392b';
       }
     } catch {
-      btn.textContent = 'Error — try again';
+      btn.textContent = L['msg-error'];
       btn.style.background = '#c0392b';
     }
     setTimeout(() => {
-      btn.textContent = 'Send Message →';
+      btn.textContent = L['btn-submit'];
       btn.style.background = '';
       btn.disabled = false;
     }, 3500);
   }
 
   // ── Chatbot ──
-  const QA = [
-    {
-      keys: ['hello','hi','hey','sup','hola','yo','greet'],
-      replies: [
-        "Hey there, human! Welcome to eWaveAI — where we make your business look good and your competitors nervous. How can I help?",
-        "Oh hello! I was just sitting here being artificially intelligent. What can I do for you?",
-        "Hi! Fair warning: I'm an AI assistant, so I'm legally obligated to be helpful. What's up?"
-      ]
-    },
-    {
-      keys: ['website','web','site','build','design','page'],
-      replies: [
-        "Websites are our bread, butter, and probably our artisan sourdough too. We build custom, high-converting sites that actually get you customers — not just compliments from your mum.",
-        "Ah yes, websites — our speciality! We design fast, beautiful, conversion-focused sites. Think of it as your best salesperson, but without the awkward small talk.",
-        "We build websites that work harder than a golden retriever at a frisbee championship. Fast, beautiful, and built to rank on Google."
-      ]
-    },
-    {
-      keys: ['ai','automat','bot','workflow','automate'],
-      replies: [
-        "AI automations! Our personal favourite. We set up workflows that handle follow-ups, bookings, lead routing — basically all the boring stuff so you can do the fun stuff. Or nap. No judgment.",
-        "We automate the repetitive tasks that make you want to cry into your keyboard. Follow-ups, lead routing, bookings — all handled by robots. Good robots, I promise.",
-        "Think of AI automation like hiring a really fast, never-sleeping employee who doesn't ask for raises. That's what we build for you."
-      ]
-    },
-    {
-      keys: ['market','ads','seo','email','social','funnel'],
-      replies: [
-        "Digital marketing! We run ads, do SEO, build email funnels, and handle social — basically we put your business in front of the right people so hard, they can't ignore you. In a good way.",
-        "We handle the whole marketing circus so you don't have to. Ads, SEO, email funnels — the works. Your competitors won't know what hit them.",
-        "Marketing is just telling the right people how awesome you are. We do that, but with data and strategy instead of just shouting into the void."
-      ]
-    },
-    {
-      keys: ['growth','scale','profit','revenue','customer','lead'],
-      replies: [
-        "Growth systems are basically a customer magnet on autopilot. We build the full journey — from stranger to paying fan — and then make it run itself. Neat, right?",
-        "We map out the entire customer journey and automate it so leads come in, get nurtured, and convert — even while you sleep. It's like having a sales team that never takes a coffee break.",
-        "More customers, more revenue, less manual work. That's the goal and we're annoyingly good at achieving it."
-      ]
-    },
-    {
-      keys: ['price','cost','how much','pricing','cheap','expensive','fee','package'],
-      replies: [
-        "Pricing depends on what you need — a landing page costs a lot less than a full growth system with AI automations. Best move? Book a free strategy call and we'll figure out what makes sense for you. No awkward sales pressure, promise.",
-        "We don't do one-size-fits-all pricing because businesses aren't one-size-fits-all. Drop us a message or book a call and we'll put together something that fits your goals and budget.",
-        "Honestly, it depends on your project scope. But here's the fun part — the first strategy call is free! Use the contact form and let's chat numbers."
-      ]
-    },
-    {
-      keys: ['contact','call','book','reach','talk','email','meet'],
-      replies: [
-        "You can reach us at info@ewaveai.de or just fill in the contact form on this very page. We reply within 24 hours — faster if we've had coffee.",
-        "Scroll down to the contact form, fire off a message, and we'll get back to you within 24 hours. Or email us at info@ewaveai.de if you're old school.",
-        "We'd love to chat! Hit the contact form below or email info@ewaveai.de. We promise to reply before we forget what you said."
-      ]
-    },
-    {
-      keys: ['how long','timeline','fast','quick','time','when','weeks','days'],
-      replies: [
-        "Timelines vary by project — a website can go live in weeks, while a full automation + marketing setup takes a bit longer. We move fast without cutting corners. Unlike my loading screen, we don't freeze.",
-        "We typically get websites live within a few weeks. Full AI automation and marketing systems take a little longer to set up properly — but they're worth the wait!",
-        "Faster than you'd expect, slower than magic. Websites: a few weeks. Full systems: a bit more. Book a call and we'll give you a real timeline."
-      ]
-    },
-    {
-      keys: ['who','about','ewaveai','team','company','what are you','what do you do'],
-      replies: [
-        "eWaveAI is a digital agency that builds websites, sets up AI automations, and runs marketing — all to help businesses get more customers and work less. Basically, we're your unfair advantage.",
-        "We're eWaveAI — part web studio, part AI lab, part growth consultancy. We help businesses look great online, attract customers, and automate the boring stuff.",
-        "eWaveAI builds websites that convert, marketing systems that attract, and AI automations that handle everything else. Think of us as the business upgrade you didn't know you needed."
-      ]
-    },
-    {
-      keys: ['joke','funny','laugh','fun','humor'],
-      replies: [
-        "Why did the website go to therapy? It had too many unresolved issues. ...We fix those too, by the way.",
-        "Why don't scientists trust atoms? Because they make up everything. Unlike our results — those are very real.",
-        "I tried to write a joke about AI automation, but the bot beat me to the punchline. Honestly, relatable."
-      ]
-    },
-    {
-      keys: ['thank','thanks','great','awesome','cool','nice','perfect','love'],
-      replies: [
-        "You're too kind! We do try our best. Is there anything else I can help with?",
-        "Aw, shucks! You're making the AI blush. Anything else on your mind?",
-        "Thank you! If there's anything else you want to know, I'm all ears. Metaphorically. I don't have ears."
-      ]
-    }
-  ];
+  const QA = {
+    en: [
+      { keys: ['hello','hi','hey','sup','hola','yo','greet'], replies: ["Hey there, human! Welcome to eWaveAI — where we make your business look good and your competitors nervous. How can I help?","Oh hello! I was just sitting here being artificially intelligent. What can I do for you?","Hi! Fair warning: I'm an AI assistant, so I'm legally obligated to be helpful. What's up?"] },
+      { keys: ['website','web','site','build','design','page'], replies: ["Websites are our bread, butter, and probably our artisan sourdough too. We build custom, high-converting sites that actually get you customers — not just compliments from your mum.","We build websites that work harder than a golden retriever at a frisbee championship. Fast, beautiful, and built to rank on Google."] },
+      { keys: ['ai','automat','bot','workflow'], replies: ["AI automations! Our personal favourite. We set up workflows that handle follow-ups, bookings, lead routing — basically all the boring stuff so you can do the fun stuff. Or nap. No judgment.","Think of AI automation like hiring a really fast, never-sleeping employee who doesn't ask for raises. That's what we build for you."] },
+      { keys: ['market','ads','seo','email','social','funnel'], replies: ["Digital marketing! We run ads, do SEO, build email funnels, and handle social — basically we put your business in front of the right people so hard, they can't ignore you.","We handle the whole marketing circus so you don't have to. Ads, SEO, email funnels — the works. Your competitors won't know what hit them."] },
+      { keys: ['price','cost','how much','pricing','fee','package'], replies: ["Pricing depends on what you need. Best move? Book a free strategy call and we'll figure out what makes sense for you. No awkward sales pressure, promise.","The first strategy call is free! Use the contact form and let's chat numbers."] },
+      { keys: ['contact','call','book','reach','talk','meet'], replies: ["You can reach us at info@ewaveai.de or just fill in the contact form on this very page. We reply within 24 hours — faster if we've had coffee.","Scroll down to the contact form, fire off a message, and we'll get back to you within 24 hours."] },
+      { keys: ['how long','timeline','fast','quick','time','when','weeks'], replies: ["Websites can go live in weeks. Full AI automation and marketing systems take a bit longer — but they're worth the wait!","Faster than you'd expect, slower than magic. Book a call and we'll give you a real timeline."] },
+      { keys: ['who','about','ewaveai','team','company'], replies: ["eWaveAI is a digital agency that builds websites, sets up AI automations, and runs marketing — all to help businesses get more customers and work less.","We're eWaveAI — part web studio, part AI lab, part growth consultancy."] },
+      { keys: ['joke','funny','laugh'], replies: ["Why did the website go to therapy? It had too many unresolved issues. ...We fix those too, by the way.","Why don't scientists trust atoms? Because they make up everything. Unlike our results — those are very real."] },
+      { keys: ['thank','thanks','great','awesome','cool','nice','perfect'], replies: ["You're too kind! Is there anything else I can help with?","Aw, shucks! Anything else on your mind?"] }
+    ],
+    de: [
+      { keys: ['hallo','hi','hey','moin','servus','grüß'], replies: ["Hey! Willkommen bei eWaveAI — wo wir dein Business großartig aussehen lassen und deine Konkurrenz nervös machen. Wie kann ich helfen?","Oh hallo! Ich saß hier gerade und war künstlich intelligent. Was kann ich für dich tun?"] },
+      { keys: ['website','web','seite','aufbau','design'], replies: ["Websites sind unser Brot und Butter. Wir bauen maßgeschneiderte, hochkonvertierende Seiten, die dir wirklich Kunden bringen — nicht nur Komplimente von der Mama.","Wir bauen Websites, die härter arbeiten als du. Schnell, schön und für Google optimiert."] },
+      { keys: ['ki','ai','automat','bot','workflow'], replies: ["KI-Automatisierungen sind unser Lieblingsthema! Wir richten Workflows ein, die Follow-ups, Buchungen und Lead-Routing übernehmen — der langweilige Kram, den du nicht machen willst.","Stell dir vor, du hast einen super schnellen Mitarbeiter, der nie schläft und keine Gehaltserhöhung will. Das ist KI-Automatisierung von eWaveAI."] },
+      { keys: ['marketing','werbung','seo','email','social','funnel'], replies: ["Marketing! Wir schalten Anzeigen, machen SEO, bauen E-Mail-Funnels und kümmern uns um Social Media — damit dein Business genau vor den richtigen Leuten erscheint.","Wir übernehmen den ganzen Marketing-Zirkus, damit du es nicht musst."] },
+      { keys: ['preis','kosten','wie viel','preise','paket'], replies: ["Die Preise hängen von deinem Projekt ab. Am besten: Buche ein kostenloses Strategiegespräch und wir schauen gemeinsam, was Sinn ergibt.","Das erste Strategiegespräch ist kostenlos! Nutze das Kontaktformular und wir reden über Zahlen."] },
+      { keys: ['kontakt','anruf','buchen','erreichen','schreiben'], replies: ["Du erreichst uns unter info@ewaveai.de oder füllst einfach das Kontaktformular auf dieser Seite aus. Wir antworten innerhalb von 24 Stunden."] },
+      { keys: ['wie lang','zeitplan','schnell','wann','wochen'], replies: ["Websites gehen in wenigen Wochen live. Volle KI-Automatisierung und Marketingsysteme dauern etwas länger — aber es lohnt sich!"] },
+      { keys: ['wer','über','ewaveai','team','unternehmen'], replies: ["eWaveAI ist eine digitale Agentur, die Websites baut, KI-Automatisierungen einrichtet und Marketing betreibt — damit dein Business mehr Kunden bekommt und du weniger arbeitest."] },
+      { keys: ['witz','lustig','lachen'], replies: ["Warum vertrauen Wissenschaftler Atomen nicht? Weil sie alles zusammensetzen. Anders als unsere Ergebnisse — die sind sehr real.","Warum ging die Website in die Therapie? Sie hatte zu viele ungelöste Probleme. ...Die lösen wir auch."] },
+      { keys: ['danke','super','toll','cool','perfekt','klasse'], replies: ["Sehr nett! Kann ich noch etwas für dich tun?","Danke! Noch weitere Fragen?"] }
+    ]
+  };
 
-  const fallbacks = [
-    "Great question! That one stumped me a little — I'm an AI, not a wizard. For anything specific, drop us a message at info@ewaveai.de and a real human will sort you out.",
-    "Hmm, not sure I caught that! Try asking about our services, pricing, timelines, or just say hi. Or if you're feeling bold, ask me for a joke.",
-    "I understood about 60% of that — which is actually above average for a Monday. Could you rephrase? Or just reach out via the contact form and we'll handle it properly!"
-  ];
+  const fallbacks = {
+    en: ["Great question! That one stumped me — for specifics, drop a message at info@ewaveai.de and a real human will sort you out.","Hmm, not sure I caught that! Try asking about our services, pricing, or just say hi."],
+    de: ["Gute Frage! Das hat mich etwas überfordert — schreib uns einfach an info@ewaveai.de und ein Mensch hilft dir weiter.","Hmm, das habe ich nicht ganz verstanden! Frag mich nach unseren Leistungen, Preisen oder sag einfach Hallo."]
+  };
 
-  const suggestions = ["What do you do?", "How much does it cost?", "How fast can you deliver?", "Tell me a joke", "How do I contact you?"];
+  const suggestions = {
+    en: ["What do you do?", "How much does it cost?", "How fast can you deliver?", "Tell me a joke", "How do I contact you?"],
+    de: ["Was macht ihr?", "Was kostet es?", "Wie schnell seid ihr?", "Erzähl einen Witz", "Wie erreiche ich euch?"]
+  };
 
   let chatOpen = false;
   let greeted = false;
+
+  const greetings = {
+    en: "Hey! I'm Wavey, eWaveAI's chat assistant. I'm basically a genius, but in a very specific and limited way. Ask me anything about what we do!",
+    de: "Hey! Ich bin Wavey, der Chat-Assistent von eWaveAI. Ich bin quasi ein Genie — aber auf eine sehr spezifische und begrenzte Art. Frag mich alles über das, was wir tun!"
+  };
 
   function toggleChat() {
     chatOpen = !chatOpen;
@@ -791,14 +876,14 @@
     document.getElementById('icon-close').style.display = chatOpen ? 'block' : 'none';
     if (chatOpen && !greeted) {
       greeted = true;
-      setTimeout(() => botSay("Hey! I'm Wavey, eWaveAI's chat assistant. I'm basically a genius, but in a very specific and limited way. Ask me anything about what we do!"), 300);
+      setTimeout(() => botSay(greetings[currentLang]), 300);
       renderChips();
     }
   }
 
   function renderChips() {
     const el = document.getElementById('chat-chips');
-    el.innerHTML = suggestions.map(s => `<span class="chip" onclick="askChip('${s}')">${s}</span>`).join('');
+    el.innerHTML = suggestions[currentLang].map(s => `<span class="chip" onclick="askChip('${s}')">${s}</span>`).join('');
   }
 
   function askChip(text) {
@@ -830,10 +915,11 @@
 
   function getReply(input) {
     const lower = input.toLowerCase();
-    for (const entry of QA) {
+    const entries = QA[currentLang] || QA['en'];
+    for (const entry of entries) {
       if (entry.keys.some(k => lower.includes(k))) return pick(entry.replies);
     }
-    return pick(fallbacks);
+    return pick(fallbacks[currentLang] || fallbacks['en']);
   }
 
   function sendMsg() {
@@ -846,6 +932,5 @@
     botSay(getReply(text));
   }
 </script>
-
 </body>
 </html>
